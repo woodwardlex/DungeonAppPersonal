@@ -122,4 +122,4 @@ namespace DungeonLibrary
         }//end CalcEnchantBonus()
 
     }
-}
+
