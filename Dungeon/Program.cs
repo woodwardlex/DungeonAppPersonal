@@ -49,12 +49,14 @@ namespace Dungeon
             bool exit = false;
 
             //Make Expandable Collection (list) of weapon that the player has.
+            //List<Weapons> treasures = new List<Weapons>();
             //
             do
             {
                 //Create Room
                 Console.WriteLine(GetRoom());
                 //Generate treasure (string describing piece of treasure - variable)
+                
                 //string currentTreasure = GetTreasure();
                 //Create the Monsters
                 Dragon d1 = new Dragon();
@@ -103,37 +105,74 @@ namespace Dungeon
                         case ConsoleKey.A:
                             Console.WriteLine("Player Attacks!");
                             //TODO 8. Handle the Attack Sequence
-                            
+                            Combat.DoBattle(player, monster);
+
                             //TODO 9. Handle if the player wins
+                            if (monster.Health <= 0)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Blue;
+                                Console.WriteLine("\nYou defeated {0}!\n", monster.Name);
+                                Console.ResetColor();
+                                reload = true;
+                                score++;
+                            }
                             //currentTreasure.Add()
                             break;
                         case ConsoleKey.R:
                             Console.WriteLine("Run Away!");
                             //TODO 10. Monster gets a free attack
+                            Console.WriteLine($"\n{monster.Name} attacked you as you ran away!\n");
                             //TODO 11. Exit the inner loop and get a new moster/room
+                            Combat.DoAttack(monster, player);
                             reload = true;//exit the inner loop and get a new room for the monster
                             break;
                         case ConsoleKey.P:
                             Console.WriteLine("Player Info\n");
                             //TODO 12.Print out the player info
-                            //Console.WriteLine(player info);
+                            Console.WriteLine(player);
                             //foreach for printing collection to console
+                            //foreach treasure in treasures, print treasure
+
                             break;
                         case ConsoleKey.M:
                             Console.WriteLine("Monster Info\n");
                             //TODO 13. Print out the monster info
+                            Console.WriteLine(monster);
                             break;
                         case ConsoleKey.X:
-                            Console.WriteLine("Nobody like a quitter! Be gone!");
+                            Console.WriteLine("Quitters don't get chicken dinners! Enjoy your can o' beans, quitter!");
                             exit = true;
                             break;
                         default:
-                            Console.WriteLine("Thou hast chosen improperly...triest thou again!");
+                            Console.WriteLine("Did you even read the choices? Try again!");
                             break;
                     }
                     #endregion
 
                     //TODO 14. Check the player's life points before continuing
+                    if (player.Health <= 0)
+                    {
+                        Console.WriteLine($"{player.Name} has died. Would you like to continue? (Y/N)");
+                        ConsoleKey key = Console.ReadKey(true).Key;
+
+                        switch (key)
+                        {
+                            case ConsoleKey.Y:
+                                reload = true;
+                                break;
+                            case ConsoleKey.N:
+                                exit = true;
+                                break;
+                            default:
+                                Console.WriteLine("Invalid input. Try again.");
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine($"{player.Name} has a health of {player.Health} out {player.MaxHealth}.");
+                    }
+                    
 
                 } while (!exit && !reload);
 
@@ -141,7 +180,6 @@ namespace Dungeon
             } while (!exit);//exit the program
 
             //Tell the user the game has ended and give them their score.
-            //Ternary operator
             Console.WriteLine("You defeated " + score + " monster" + (score == 1 ? "." : "s."));
 
         }//end main
