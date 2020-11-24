@@ -62,6 +62,18 @@ namespace Dungeon
                 Dragon d3 = new Dragon("Samson", 50, 50, 35, 20, 4, 12, "Look at the blue scales on that huge dragon!", false, true);
                 Slime s1 = new Slime();
                 Slime s2 = new Slime("Fire Slime", 30, 30, 20, 20, 5, 15, "That slime is glowng red... Maybe I should watch out.", true);
+                Bat b1 = new Bat();
+                Bat b2 = new Bat("Ravenous Bat", 20, 20, 50, 20, 2, 8, "A bat with large wings is hanging from the cave ceiling. Looks like it's sleeping.", true, false);
+                Bat b3 = new Bat("Large Bat", 20, 20, 50, 20, 2, 8, "A bat with large wings is hanging from the cave ceiling. Looks like it's sleeping.", false, true);
+                Bat b4 = new Bat("Vampire Bat", 45, 45, 65, 25, 8, 16, "A bat with large wings is hanging from the cave ceiling. Looks like it's sleeping, but for some reason I cannot shake the feeling that I shouldn't go near that bat.", true, true);
+
+                //Create an array of monsters
+                Monster[] monsters = { d1, d2, d3, s1, s2, b1, b2, b3, b4 };
+
+                //Select monsters by random
+                Random random = new Random();
+                int randNbr = random.Next(monsters.Length);
+                Monster monster = monsters[randNbr];
 
                 //TODO 4. Create a Menu of Options
                 bool reload = false;
@@ -91,6 +103,7 @@ namespace Dungeon
                         case ConsoleKey.A:
                             Console.WriteLine("Player Attacks!");
                             //TODO 8. Handle the Attack Sequence
+                            
                             //TODO 9. Handle if the player wins
                             //currentTreasure.Add()
                             break;
